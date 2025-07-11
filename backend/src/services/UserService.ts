@@ -57,8 +57,8 @@ export const update = async (userId: string, updateData: Partial<IUser>):
   return await User.findOneAndUpdate({ id: userId }, updateData, { new: true });
 };
 
-export const delete_user = async (userId: string):
+export const delete_user = async (id: string):
   Promise<void> => {
-  await User.deleteOne({ id: userId });
-  await Review.deleteMany({ userId });
+  await User.deleteOne({ id });
+  await Review.deleteMany({ id });
 };

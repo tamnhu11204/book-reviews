@@ -25,8 +25,8 @@ export const getBookById = async (req: Request, res: Response) => {
 
 export const createBook = async (req: Request, res: Response) => {
   try {
-    const { title, author, publicationYear } = req.body;
-    const newBook = await create(title, author, publicationYear );
+    const { title, author, publicationYear, img } = req.body;
+    const newBook = await create(title, author, publicationYear, img );
     res.status(201).json(newBook);
   } catch (error: any) {
     res.status(400).json({ message: error.message || 'Error adding book' });
@@ -36,8 +36,8 @@ export const createBook = async (req: Request, res: Response) => {
 export const updateBook = async (req: Request, res: Response) => {
   try {
     const id  = req.params.id;
-    const { title, author, publicationYear } = req.body;
-    const updatedBook = await update(id, { title, author, publicationYear });
+    const { title, author, publicationYear, img } = req.body;
+    const updatedBook = await update(id, { title, author, publicationYear, img });
     if (!updatedBook) {
       return res.status(404).json({ message: 'Book not found' });
     }

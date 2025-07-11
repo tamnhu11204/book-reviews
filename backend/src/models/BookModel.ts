@@ -6,6 +6,7 @@ export interface IBook extends Document {
   author: string;
   ratingTotal: number;
   publicationYear: number;
+  img: string;
 }
 
 const BookSchema: Schema = new Schema({
@@ -13,6 +14,7 @@ const BookSchema: Schema = new Schema({
   title: { type: String, required: true },
   author: { type: String, required: true },
   ratingTotal: { type: Number, required: true, default: 0 },
+  img: {type: String, required: true},
   publicationYear: { type: Number, required: true, min: 1000, max: new Date().getFullYear() },
 });
 

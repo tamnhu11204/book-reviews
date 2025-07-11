@@ -7,6 +7,6 @@ router.post('/create', createBook)
 router.put('/update/:id', updateBook)
 router.delete('/delete/:id', deleteBook)
 router.get('/get-all', getAllBooks)
-router.get('/get-detail', getBookById)
+router.get('/get-detail/:id', getBookById)
 
 export default router;

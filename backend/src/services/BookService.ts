@@ -12,9 +12,9 @@ export const getById = async (id: string):
     return await Book.findOne({ id });
 };
 
-export const create = async (title: string, author: string, publicationYear: number):
+export const create = async (title: string, author: string, publicationYear: number, img: string):
     Promise<IBook> => {
-    if (!title || !author || !publicationYear) {
+    if (!title || !author || !publicationYear ||!img) {
         throw new Error('Missing required fields');
     }
     const newBook = new Book({
@@ -22,6 +22,7 @@ export const create = async (title: string, author: string, publicationYear: num
         title,
         author,
         publicationYear,
+        img,
         ratingTotal: 0,
     });
     return await newBook.save();
