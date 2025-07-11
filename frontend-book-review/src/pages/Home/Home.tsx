@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BookCard from '../../components/BookCard';
 import { getAllBooks } from '../../services/BookService';
 import type { IBook } from '../../types';
+import { Book } from 'lucide-react';
 
 const Home: React.FC = () => {
   const [books, setBooks] = useState<IBook[]>([]);
@@ -25,7 +26,9 @@ const Home: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">All Books</h1>
+      <h1 className="text-3xl font-bold mb-4">
+        <Book/>
+        All Books</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {books.map((book) => (
           <BookCard key={book.id} book={book} />

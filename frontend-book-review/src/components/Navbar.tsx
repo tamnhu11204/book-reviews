@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
+import { House, LogOut, UserRound } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const { user, logout } = useContext(AuthContext);
@@ -13,14 +14,14 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="bg-blue-600 p-4 text-white">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container  flex justify-between items-center">
         <Link to="/" className="text-2xl font-bold">Book Review</Link>
-        <div className="space-x-4">
-          <Link to="/" className="hover:underline">Home</Link>
+        <div className="flex flex-row">
+          <Link to="/" className="hover:underline"><House/></Link>
           {user ? (
             <>
-              <Link to={`/profile/${user.id}`} className="hover:underline">Profile</Link>
-              <button onClick={handleLogout} className="hover:underline">Log out</button>
+              <Link to={`/profile/${user.id}`} className="hover:underline"><UserRound /></Link>
+              <button onClick={handleLogout} className="hover:underline"><LogOut /></button>
             </>
           ) : (
             <>

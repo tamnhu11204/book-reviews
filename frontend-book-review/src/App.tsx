@@ -7,6 +7,7 @@ import Home from './pages/Home/Home';
 import BookDetail from './pages/BookDetail/BookDetail';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
+// import { UserProfile } from './pages/UserProfile/UserProfile';
 
 const App: React.FC = () => {
   return (
@@ -20,7 +21,7 @@ const App: React.FC = () => {
               <Route path="/book/:id" element={<BookDetail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/profile/:id" element={<div>Profile Page (TBD)</div>} />
+              {/* <Route path="/profile/:id" element={<UserProfile/>} /> */}
             </Routes>
           </main>
           <Footer />
