@@ -4,7 +4,8 @@ import { User, IUser } from '../models/UserModel';
 import { v4 as uuidv4 } from 'uuid';
 import { Review } from '../models/ReviewModel';
 
-export const registerUser = async (email: string, password: string, username: string, avatar?: string): Promise<IUser> => {
+export const register = async (email: string, password: string, username: string, avatar?: string):
+  Promise<IUser> => {
   if (!email || !password || !username) {
     throw new Error('Missing required fields');
   }
@@ -17,7 +18,8 @@ export const registerUser = async (email: string, password: string, username: st
   return await newUser.save();
 };
 
-export const loginUser = async (email: string, password: string): Promise<string> => {
+export const login = async (email: string, password: string):
+  Promise<string> => {
   const user = await User.findOne({ email });
   if (!user) {
     throw new Error('Invalid email or password');
@@ -30,11 +32,13 @@ export const loginUser = async (email: string, password: string): Promise<string
   return token;
 };
 
-export const getUserProfile = async (userId: string): Promise<IUser | null> => {
+export const getProfile = async (userId: string):
+  Promise<IUser | null> => {
   return await User.findOne({ id: userId }, '-password');
 };
 
-export const updateUserProfile = async (userId: string, updateData: Partial<IUser>): Promise<IUser | null> => {
+export const update = async (userId: string, updateData: Partial<IUser>):
+  Promise<IUser | null> => {
   if (updateData.password) {
     updateData.password = await bcrypt.hash(updateData.password, 10);
   }
@@ -53,7 +57,8 @@ export const updateUserProfile = async (userId: string, updateData: Partial<IUse
   return await User.findOneAndUpdate({ id: userId }, updateData, { new: true });
 };
 
-export const deleteUser = async (userId: string): Promise<void> => {
+export const delete_user = async (userId: string):
+  Promise<void> => {
   await User.deleteOne({ id: userId });
   await Review.deleteMany({ userId });
 };

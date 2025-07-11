@@ -1,19 +1,19 @@
 import { Request, Response } from 'express';
-import {getBookById, addBook, deleteBook, updateBook, getAllBooks } from '../services/BookService';
+import { getAll, getById, create, update, delete_book } from '../services/BookService';
 
-export const getAll = async (req: Request, res: Response) => {
+export const getAllBooks = async (req: Request, res: Response) => {
   try {
-    const books = await getAllBooks();
+    const books = await getAll();
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching books' });
   }
 };
 
-export const getBook = async (req: Request, res: Response) => {
+export const getBookById = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const book = await getBookById(id);
+    const id = req.params.id;
+    const book = await getById(id);
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
     }
@@ -23,21 +23,21 @@ export const getBook = async (req: Request, res: Response) => {
   }
 };
 
-// export const add = async (req: Request, res: Response) => {
-//   try {
-//     const { title, author, publicationYear } = req.body;
-//     const newBook = await addBook({ title, author, publicationYear });
-//     res.status(201).json(newBook);
-//   } catch (error: any) {
-//     res.status(400).json({ message: error.message || 'Error adding book' });
-//   }
-// };
-
-export const update = async (req: Request, res: Response) => {
+export const createBook = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
     const { title, author, publicationYear } = req.body;
-    const updatedBook = await updateBook(id, { title, author, publicationYear });
+    const newBook = await create(title, author, publicationYear );
+    res.status(201).json(newBook);
+  } catch (error: any) {
+    res.status(400).json({ message: error.message || 'Error adding book' });
+  }
+};
+
+export const updateBook = async (req: Request, res: Response) => {
+  try {
+    const id  = req.params.id;
+    const { title, author, publicationYear } = req.body;
+    const updatedBook = await update(id, { title, author, publicationYear });
     if (!updatedBook) {
       return res.status(404).json({ message: 'Book not found' });
     }
@@ -47,10 +47,10 @@ export const update = async (req: Request, res: Response) => {
   }
 };
 
-export const deletebook = async (req: Request, res: Response) => {
+export const deleteBook = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    await deleteBook(id);
+    const id = req.params.id;
+    await delete_book(id);
     res.status(204).send();
   } catch (error) {
     res.status(500).json({ message: 'Error deleting book' });

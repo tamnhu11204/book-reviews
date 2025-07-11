@@ -3,36 +3,36 @@ import { IReview, Review } from "../models/ReviewModel";
 import { User } from "../models/UserModel";
 import { v4 as uuidv4 } from 'uuid'
 
-export const getReviewsByBookId = async (bookId: string):
+export const getByBookId = async (bookId: string):
     Promise<IReview[]> => {
     return await Review.find({ bookId }).populate('userId', 'username avatar');
 };
 
-export const createReview = async (reviewData: Omit<IReview, 'date' | 'id'>):
+export const create = async (bookId: string, userId: string, rating: number, comment: string):
     Promise<IReview> => {
-    if (!reviewData.bookId || !reviewData.userId || !reviewData.rating || !reviewData.comment) {
+    if (!bookId || userId || !rating || !comment) {
         throw new Error('Missing required fields.')
     }
 
-    const existingUser = await User.findOne({ id: reviewData.userId })
+    const existingUser = await User.findOne({ id: userId })
     if (!existingUser) {
         throw new Error('User not found.')
     }
 
-    const existingBook = await Book.findOne({ id: reviewData.bookId })
+    const existingBook = await Book.findOne({ id: bookId })
     if (!existingBook) {
         throw new Error('Book not found.')
     }
 
-    const newReview = new Review({ ...reviewData, id: uuidv4(), date: new Date() })
+    const newReview = new Review({ id: uuidv4(), bookId, userId, rating, comment, date: new Date() })
     const savedReview = await newReview.save()
-    const reviews = await Review.find({ bookId: reviewData.bookId });
+    const reviews = await Review.find({ bookId });
     const newRatingTotal = reviews.reduce((sum, review) => sum + review.rating, 0);
-    await Book.findOneAndUpdate({ id: reviewData.bookId }, { ratingTotal: newRatingTotal });
+    await Book.findOneAndUpdate({ id: bookId }, { ratingTotal: newRatingTotal });
     return savedReview;
 }
 
-export const updateReview = async (id: string, updateData: Partial<IReview>, userId: string):
+export const update = async (id: string, updateData: Partial<IReview>, userId: string):
     Promise<IReview | null> => {
     const review = await Review.findOne({ id })
 
@@ -52,7 +52,7 @@ export const updateReview = async (id: string, updateData: Partial<IReview>, use
     return updatedReview;
 }
 
-export const deleteReview = async (id: string, userId: string):
+export const delete_review = async (id: string, userId: string):
     Promise<void> => {
     const review = await Review.findOne({ id })
 
