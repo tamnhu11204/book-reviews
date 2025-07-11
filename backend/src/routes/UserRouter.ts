@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/get-profile', authMiddleware, getUserProfile);
+router.get('/get-profile/:id', authMiddleware, getUserProfile);
 router.put('/update/:id', authMiddleware, updateUser);
 router.delete('/delete/:id', authMiddleware, deleteUser);
 

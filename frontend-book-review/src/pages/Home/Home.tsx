@@ -13,7 +13,7 @@ const Home: React.FC = () => {
         const data = await getAllBooks();
         setBooks(data);
       } catch (error) {
-        console.error('Lỗi khi lấy sách:', error);
+        console.error('Error fetching books:', error);
       } finally {
         setLoading(false);
       }

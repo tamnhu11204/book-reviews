@@ -26,21 +26,21 @@ export const useAuth = () => {
   }, [token]);
 
   const loginUser = async (email: string, password: string) => {
-    const newToken = await login({ email, password }); // Truyền object
+    const newToken = await login(email, password); // Gọi với tham số riêng lẻ
     setToken(newToken);
     localStorage.setItem('token', newToken);
-    // Lấy lại thông tin người dùng sau khi đăng nhập
+    // Lấy thông tin người dùng sau khi đăng nhập
     const payload = JSON.parse(atob(newToken.split('.')[1]));
     const userData = await getProfile(payload.userId);
     setUser(userData);
   };
 
   const registerUser = async (email: string, password: string, username: string, avatar?: string) => {
-    await register({ email, password, username, avatar }); // Truyền object
-    const newToken = await login({ email, password }); // Truyền object
+    await register(email, password, username, avatar); // Gọi với tham số riêng lẻ
+    const newToken = await login(email, password); // Gọi với tham số riêng lẻ
     setToken(newToken);
     localStorage.setItem('token', newToken);
-    // Lấy lại thông tin người dùng sau khi đăng ký
+    // Lấy thông tin người dùng sau khi đăng ký
     const payload = JSON.parse(atob(newToken.split('.')[1]));
     const userData = await getProfile(payload.userId);
     setUser(userData);

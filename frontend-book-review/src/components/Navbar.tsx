@@ -3,17 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
 
 const Navbar: React.FC = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    setUser(null);
+    logout();
     navigate('/login');
   };
 
   return (
-    <nav className="bg-sky-400 p-4 text-white">
+    <nav className="bg-blue-600 p-4 text-white">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-2xl font-bold">Book Review</Link>
         <div className="space-x-4">
@@ -25,7 +24,7 @@ const Navbar: React.FC = () => {
             </>
           ) : (
             <>
-              <Link to="/login" className="hover:underline">Log in</Link>
+              <Link to="/login" className="hover:underline">Login</Link>
               <Link to="/register" className="hover:underline">Sign up</Link>
             </>
           )}

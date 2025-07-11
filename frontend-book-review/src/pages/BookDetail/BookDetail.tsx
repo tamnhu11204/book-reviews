@@ -22,7 +22,7 @@ const BookDetail: React.FC = () => {
       setBook(bookData);
       setReviews(reviewData);
     } catch (error) {
-      console.error('Lỗi khi lấy dữ liệu:', error);
+      console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
@@ -40,7 +40,7 @@ const BookDetail: React.FC = () => {
       setNewReview({ rating: 1, comment: '' });
       fetchData();
     } catch (error) {
-      console.error('Lỗi khi thêm review:', error);
+      console.error('Error adding review:', error);
     }
   };
 
@@ -83,7 +83,7 @@ const BookDetail: React.FC = () => {
               className="border p-2 rounded w-full"
             />
           </div>
-          <button type="submit" className="bg-blue-600 text-white p-2 rounded">Send Review</button>
+          <button type="submit" className="bg-blue-600 text-white p-2 rounded">Send review</button>
         </form>
       )}
     </div>

@@ -1,33 +1,24 @@
-import React, { createContext, useState, useEffect, type ReactNode, } from 'react';
+import React, { createContext, type ReactNode,  } from 'react';
 import type { IUser } from '../types';
-import { getProfile } from '../services/UserService';
+import { useAuth } from '../hooks/useAuth';
 
 interface AuthContextType {
   user: IUser | null;
-  setUser: (user: IUser | null) => void;
+  token: string | null;
+  login: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string, username: string, avatar?: string) => Promise<void>;
+  logout: () => void;
 }
 
-export const AuthContext = createContext<AuthContextType>({ user: null, setUser: () => {} });
+export const AuthContext = createContext<AuthContextType>({
+  user: null,
+  token: null,
+  login: async () => {},
+  register: async () => {},
+  logout: () => {},
+});
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<IUser | null>(null);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          const payload = JSON.parse(atob(token.split('.')[1]));
-          const userData = await getProfile(payload.userId);
-          setUser(userData);
-        } catch (error) {
-          console.error('Lỗi khi lấy thông tin người dùng:', error);
-          localStorage.removeItem('token');
-        }
-      }
-    };
-    fetchUser();
-  }, []);
-
-  return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>;
+  const auth = useAuth();
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };

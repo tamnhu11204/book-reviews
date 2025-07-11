@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { register } from '../../services/UserService';
+import { AuthContext } from '../../context/authContext';
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({ email: '', password: '', username: '', avatar: '' });
   const [error, setError] = useState('');
+  const { register } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await register(formData);
-      navigate('/login');
+      await register(formData.email, formData.password, formData.username, formData.avatar || undefined);
+      navigate('/');
     } catch (err: any) {
-      setError(err.message || 'Đăng ký thất bại');
+      setError(err.message || 'Sign up failed');
     }
   };
 
@@ -50,7 +51,7 @@ const Register: React.FC = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block">Avatar URL:</label>
+          <label className="block">Avatar URL (optional):</label>
           <input
             type="text"
             value={formData.avatar}

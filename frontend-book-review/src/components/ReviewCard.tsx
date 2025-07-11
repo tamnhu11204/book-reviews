@@ -64,7 +64,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review, onUpdate }) => {
             onClick={() => setIsEditing(false)}
             className="bg-gray-500 text-white p-2 rounded"
           >
-            Hủy
+            Cancel
           </button>
         </form>
       ) : (
