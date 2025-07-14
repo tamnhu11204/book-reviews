@@ -6,6 +6,10 @@ export const getReviewsByBookId = async (bookId: string): Promise<IReview[]> => 
   return response.data;
 };
 
+export const getReviewByUserId = async(userId: string) : Promise<IReview[]> => {
+  const response = await api.get(`/review/get-by-user/${userId}`);
+  return  response.data;
+}
 export const createReview = async (data: {
   bookId: string;
   userId: string;

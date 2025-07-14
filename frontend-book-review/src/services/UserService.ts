@@ -16,3 +16,7 @@ export const getProfile = async (id: string): Promise<IUser> => {
   const response = await api.get(`/user/get-profile/${id}`);
   return response.data;
 };
+
+export const updateUser = async(id: string, updateData: Partial<IUser>): Promise<IUser>=>{
+  const response = 
+}

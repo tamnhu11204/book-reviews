@@ -8,6 +8,11 @@ export const getByBookId = async (bookId: string):
     return await Review.find({ bookId }).populate('userId', 'username avatar');
 };
 
+export const getByUserId = async (userId: string):
+    Promise<IReview[]> => {
+    return await Review.find({ userId })
+};
+
 export const create = async (bookId: string, userId: string, rating: number, comment: string): Promise<IReview> => {
   if (!bookId || !userId || !rating || !comment) {
     throw new Error('Thiếu trường bắt buộc.');

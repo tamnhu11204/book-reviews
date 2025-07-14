@@ -1,10 +1,20 @@
 import { Request, Response } from "express";
-import { getByBookId, create, update, delete_review } from "../services/ReviewService";
+import { getByBookId, create, update, delete_review,getByUserId } from "../services/ReviewService";
 
 export const getReviewByBookId = async (req: Request, res: Response) => {
     try {
         const bookId = req.params.id;
         const reviews = await getByBookId(bookId);
+        res.json(reviews)
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching reviews.' })
+    }
+}
+
+export const getReviewByUserId = async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.id;
+        const reviews = await getByUserId(userId);
         res.json(reviews)
     } catch (error) {
         res.status(500).json({ message: 'Error fetching reviews.' })
